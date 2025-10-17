@@ -9,7 +9,7 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('student');
+  const [role, setRole] = useState('siswa');
   const [error, setError] = useState('');
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -27,14 +27,14 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <Card className="w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Register for ClassKas</h2>
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        <h2 className="text-2xl font-bold text-center mb-6">Daftar untuk ClassKas</h2>
+        {error && <p className="text-red-500 text-center mb-4">Pendaftaran gagal</p>}
         <form onSubmit={handleSubmit}>
           <Input
-            label="Name"
+            label="Nama"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your name"
+            placeholder="Masukkan nama Anda"
             required
           />
           <Input
@@ -42,32 +42,33 @@ const Register = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
+            placeholder="Masukkan email Anda"
             required
           />
           <Input
-            label="Password"
+            label="Kata Sandi"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
+            placeholder="Masukkan kata sandi Anda"
             required
           />
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Peran</label>
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             >
-              <option value="student">Student</option>
-              <option value="treasurer">Treasurer</option>
+              <option value="siswa">Siswa</option>
+              <option value="bendahara">Bendahara</option>
+              <option value="administrator">Administrator</option>
             </select>
           </div>
-          <Button type="submit" className="w-full">Register</Button>
+          <Button type="submit" className="w-full">Daftar</Button>
         </form>
         <p className="text-center mt-4">
-          Already have an account? <Link to="/login" className="text-primary hover:underline">Login</Link>
+          Sudah punya akun? <Link to="/login" className="text-primary hover:underline">Masuk</Link>
         </p>
       </Card>
     </div>

@@ -58,7 +58,7 @@ const Reminders = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this reminder?')) {
+    if (window.confirm('Apakah Anda yakin ingin menghapus pengingat ini?')) {
       try {
         await api.deleteReminder(id);
         fetchReminders();
@@ -80,8 +80,8 @@ const Reminders = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Reminders</h1>
-        <Button onClick={() => setIsModalOpen(true)}>+ Add Reminder</Button>
+        <h1 className="text-3xl font-bold">Pengingat</h1>
+        <Button onClick={() => setIsModalOpen(true)}>+ Tambah Pengingat</Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -89,17 +89,17 @@ const Reminders = () => {
           <Card key={reminder.id} className={`border-l-4 ${reminder.status === 'active' ? 'border-l-primary' : 'border-l-secondary'}`}>
             <h3 className="text-lg font-semibold mb-2">{reminder.title}</h3>
             <p className="text-gray-600 mb-2">{reminder.description}</p>
-            <p className="text-sm text-gray-500 mb-4">Due: {new Date(reminder.dueDate).toLocaleDateString()}</p>
+            <p className="text-sm text-gray-500 mb-4">Jatuh Tempo: {new Date(reminder.dueDate).toLocaleDateString()}</p>
             <div className="flex justify-between items-center">
               <span className={`px-2 py-1 rounded text-xs ${reminder.status === 'active' ? 'bg-primary text-white' : 'bg-secondary text-white'}`}>
-                {reminder.status}
+                {reminder.status === 'active' ? 'Aktif' : 'Selesai'}
               </span>
               <div className="space-x-2">
                 <Button onClick={() => toggleStatus(reminder)} variant="secondary" size="sm">
-                  {reminder.status === 'active' ? 'Mark Done' : 'Mark Active'}
+                  {reminder.status === 'active' ? 'Tandai Selesai' : 'Tandai Aktif'}
                 </Button>
                 <Button onClick={() => handleEdit(reminder)} variant="secondary" size="sm">Edit</Button>
-                <Button onClick={() => handleDelete(reminder.id)} variant="danger" size="sm">Delete</Button>
+                <Button onClick={() => handleDelete(reminder.id)} variant="danger" size="sm">Hapus</Button>
               </div>
             </div>
           </Card>
@@ -113,24 +113,24 @@ const Reminders = () => {
           setEditingReminder(null);
           setFormData({ title: '', description: '', dueDate: '', status: 'active' });
         }}
-        title={editingReminder ? 'Edit Reminder' : 'Add Reminder'}
+        title={editingReminder ? 'Edit Pengingat' : 'Tambah Pengingat'}
       >
         <form onSubmit={handleSubmit}>
           <Input
-            label="Title"
+            label="Judul"
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            placeholder="Enter title"
+            placeholder="Masukkan judul"
             required
           />
           <Input
-            label="Description"
+            label="Deskripsi"
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            placeholder="Enter description"
+            placeholder="Masukkan deskripsi"
           />
           <Input
-            label="Due Date"
+            label="Tanggal Jatuh Tempo"
             type="date"
             value={formData.dueDate}
             onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
@@ -143,12 +143,12 @@ const Reminders = () => {
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             >
-              <option value="active">Active</option>
-              <option value="done">Done</option>
+              <option value="active">Aktif</option>
+              <option value="done">Selesai</option>
             </select>
           </div>
           <Button type="submit" className="w-full">
-            {editingReminder ? 'Update' : 'Add'} Reminder
+            {editingReminder ? 'Perbarui' : 'Tambah'} Pengingat
           </Button>
         </form>
       </Modal>

@@ -50,47 +50,47 @@ const Reports = () => {
 
   const generatePDF = () => {
     const doc = new jsPDF();
-    doc.text('ClassKas Financial Report', 20, 20);
-    doc.text(`Total Balance: $${stats.balance.toFixed(2)}`, 20, 40);
-    doc.text(`Total Income: $${stats.income.toFixed(2)}`, 20, 50);
-    doc.text(`Total Expense: $${stats.expense.toFixed(2)}`, 20, 60);
-    doc.save('classkas-report.pdf');
+    doc.text('Laporan Keuangan ClassKas', 20, 20);
+    doc.text(`Total Saldo: Rp${stats.balance.toFixed(2)}`, 20, 40);
+    doc.text(`Total Pemasukan: Rp${stats.income.toFixed(2)}`, 20, 50);
+    doc.text(`Total Pengeluaran: Rp${stats.expense.toFixed(2)}`, 20, 60);
+    doc.save('laporan-classkas.pdf');
   };
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6">Reports</h1>
+      <h1 className="text-3xl font-bold mb-6">Laporan</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <Card>
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-text">Current Balance</h3>
-            <p className="text-2xl font-bold text-primary">${stats.balance.toFixed(2)}</p>
+            <h3 className="text-lg font-semibold text-text">Saldo Saat Ini</h3>
+            <p className="text-2xl font-bold text-primary">Rp{stats.balance.toFixed(2)}</p>
           </div>
         </Card>
         <Card>
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-text">Total Income</h3>
-            <p className="text-2xl font-bold text-green-600">${stats.income.toFixed(2)}</p>
+            <h3 className="text-lg font-semibold text-text">Total Pemasukan</h3>
+            <p className="text-2xl font-bold text-green-600">Rp{stats.income.toFixed(2)}</p>
           </div>
         </Card>
         <Card>
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-text">Total Expense</h3>
-            <p className="text-2xl font-bold text-red-600">${stats.expense.toFixed(2)}</p>
+            <h3 className="text-lg font-semibold text-text">Total Pengeluaran</h3>
+            <p className="text-2xl font-bold text-red-600">Rp{stats.expense.toFixed(2)}</p>
           </div>
         </Card>
       </div>
 
       <Card className="mb-6">
-        <h3 className="text-xl font-semibold mb-4">Spending Overview</h3>
+        <h3 className="text-xl font-semibold mb-4">Ringkasan Pengeluaran</h3>
         <div className="w-full max-w-md mx-auto">
           <Pie data={pieData} />
         </div>
       </Card>
 
       <div className="text-center">
-        <Button onClick={generatePDF}>Download Report as PDF</Button>
+        <Button onClick={generatePDF}>Unduh Laporan sebagai PDF</Button>
       </div>
     </div>
   );

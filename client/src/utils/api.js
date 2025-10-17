@@ -30,6 +30,8 @@ export const api = {
 
   // Transactions
   getTransactions: () => axios.get(`${API_BASE_URL}/transactions`),
+  getDashboardStats: () => axios.get(`${API_BASE_URL}/transactions/stats`),
+  getMonthlyChartData: () => axios.get(`${API_BASE_URL}/transactions/chart`),
   createTransaction: (data) => axios.post(`${API_BASE_URL}/transactions`, data),
   updateTransaction: (id, data) => axios.put(`${API_BASE_URL}/transactions/${id}`, data),
   deleteTransaction: (id) => axios.delete(`${API_BASE_URL}/transactions/${id}`),

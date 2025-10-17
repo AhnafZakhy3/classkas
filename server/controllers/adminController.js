@@ -27,7 +27,7 @@ const createUser = async (req, res) => {
       name,
       email,
       password: password, // Plain text
-      role: role || 'student',
+      role: role || 'siswa',
     });
 
     res.status(201).json({
@@ -97,7 +97,7 @@ const deleteUser = async (req, res) => {
 
 const getUserRoles = async (req, res) => {
   try {
-    const roles = ['administrator', 'treasurer', 'student'];
+    const roles = ['administrator', 'bendahara', 'siswa'];
     res.json(roles);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });

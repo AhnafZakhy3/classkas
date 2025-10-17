@@ -18,8 +18,8 @@ const authenticateToken = (req, res, next) => {
 };
 
 const authorizeTreasurer = (req, res, next) => {
-  if (req.user.role !== 'treasurer') {
-    return res.status(403).json({ message: 'Access denied. Treasurer role required.' });
+  if (req.user.role !== 'bendahara') {
+    return res.status(403).json({ message: 'Access denied. Bendahara role required.' });
   }
   next();
 };

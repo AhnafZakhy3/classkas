@@ -44,7 +44,7 @@ const Sidebar = () => {
               className="flex items-center space-x-3 px-3 py-2 text-text rounded-lg hover:bg-primary hover:text-white transition-colors"
             >
               <span>⚙️</span>
-              <span>Admin Panel</span>
+            <span>Panel Admin</span>
             </Link>
           )}
         </nav>

@@ -17,7 +17,7 @@ const Admin = () => {
     name: '',
     email: '',
     password: '',
-    role: 'student'
+    role: 'siswa'
   });
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Admin = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await api.get('/admin/users');
+      const response = await api.getUsers();
       setUsers(response.data);
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -41,7 +41,7 @@ const Admin = () => {
 
   const fetchRoles = async () => {
     try {
-      const response = await api.get('/admin/roles');
+      const response = await api.getRoles();
       setRoles(response.data);
     } catch (error) {
       console.error('Error fetching roles:', error);
@@ -52,13 +52,13 @@ const Admin = () => {
     e.preventDefault();
     try {
       if (editingUser) {
-        await api.put(`/admin/users/${editingUser.id}`, {
+        await api.updateUser(editingUser.id, {
           name: formData.name,
           email: formData.email,
           role: formData.role
         });
       } else {
-        await api.post('/admin/users', formData);
+        await api.createUser(formData);
       }
       fetchUsers();
       setShowModal(false);
@@ -80,9 +80,9 @@ const Admin = () => {
   };
 
   const handleDelete = async (userId) => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
+    if (window.confirm('Apakah Anda yakin ingin menghapus pengguna ini?')) {
       try {
-        await api.delete(`/admin/users/${userId}`);
+        await api.deleteUser(userId);
         fetchUsers();
       } catch (error) {
         console.error('Error deleting user:', error);
@@ -95,7 +95,7 @@ const Admin = () => {
       name: '',
       email: '',
       password: '',
-      role: 'student'
+      role: 'siswa'
     });
     setEditingUser(null);
   };
@@ -108,21 +108,21 @@ const Admin = () => {
   if (user?.role !== 'administrator') {
     return (
       <div className="text-center py-12">
-        <h2 className="text-2xl font-bold text-red-600">Access Denied</h2>
-        <p className="text-gray-600 mt-2">You don't have permission to access this page.</p>
+        <h2 className="text-2xl font-bold text-red-600">Akses Ditolak</h2>
+        <p className="text-gray-600 mt-2">Anda tidak memiliki izin untuk mengakses halaman ini.</p>
       </div>
     );
   }
 
   const columns = [
-    { key: 'name', label: 'Name' },
+    { key: 'name', label: 'Nama' },
     { key: 'email', label: 'Email' },
-    { key: 'password', label: 'Password' },
-    { key: 'role', label: 'Role' },
-    { key: 'createdAt', label: 'Created', render: (value) => new Date(value).toLocaleDateString() },
+    { key: 'password', label: 'Kata Sandi' },
+    { key: 'role', label: 'Peran' },
+    { key: 'createdAt', label: 'Dibuat', render: (value) => new Date(value).toLocaleDateString() },
     {
       key: 'actions',
-      label: 'Actions',
+      label: 'Aksi',
       render: (_, user) => (
         <div className="flex space-x-2">
           <Button
@@ -135,7 +135,7 @@ const Admin = () => {
             onClick={() => handleDelete(user.id)}
             className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
           >
-            Delete
+            Hapus
           </Button>
         </div>
       )
@@ -145,14 +145,14 @@ const Admin = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-primary">Admin Panel - User Management</h1>
+        <h1 className="text-3xl font-bold text-primary">Panel Admin - Manajemen Pengguna</h1>
         <Button onClick={openCreateModal} className="bg-primary hover:bg-primary-dark">
-          Add New User
+          Tambah Pengguna Baru
         </Button>
       </div>
 
       {loading ? (
-        <div className="text-center py-12">Loading...</div>
+        <div className="text-center py-12">Memuat...</div>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white rounded-lg shadow-md">
@@ -182,11 +182,11 @@ const Admin = () => {
 
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <h2 className="text-2xl font-bold mb-4">
-          {editingUser ? 'Edit User' : 'Create New User'}
+          {editingUser ? 'Edit Pengguna' : 'Buat Pengguna Baru'}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
-            label="Name"
+            label="Nama"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
@@ -200,7 +200,7 @@ const Admin = () => {
           />
           {!editingUser && (
             <Input
-              label="Password"
+              label="Kata Sandi"
               type="password"
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -208,18 +208,28 @@ const Admin = () => {
             />
           )}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Peran</label>
             <select
               value={formData.role}
               onChange={(e) => setFormData({ ...formData, role: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
               required
             >
-              {roles.map((role) => (
-                <option key={role} value={role}>
-                  {role.charAt(0).toUpperCase() + role.slice(1)}
-                </option>
-              ))}
+              {roles.length > 0 ? (
+                roles.map((role) => (
+                  <option key={role} value={role}>
+                    {role === 'administrator' ? 'Administrator' :
+                     role === 'bendahara' ? 'Bendahara' :
+                     role === 'siswa' ? 'Siswa' : role.charAt(0).toUpperCase() + role.slice(1)}
+                  </option>
+                ))
+              ) : (
+                <>
+                  <option value="administrator">Administrator</option>
+                  <option value="bendahara">Bendahara</option>
+                  <option value="siswa">Siswa</option>
+                </>
+              )}
             </select>
           </div>
           <div className="flex justify-end space-x-2">
@@ -228,10 +238,10 @@ const Admin = () => {
               onClick={() => setShowModal(false)}
               className="bg-gray-500 hover:bg-gray-600"
             >
-              Cancel
+              Batal
             </Button>
             <Button type="submit" className="bg-primary hover:bg-primary-dark">
-              {editingUser ? 'Update' : 'Create'}
+              {editingUser ? 'Perbarui' : 'Buat'}
             </Button>
           </div>
         </form>

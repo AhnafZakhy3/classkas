@@ -25,29 +25,29 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <Card className="w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Login to ClassKas</h2>
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        <h2 className="text-2xl font-bold text-center mb-6">Masuk ke ClassKas</h2>
+        {error && <p className="text-red-500 text-center mb-4">Kredensial tidak valid</p>}
         <form onSubmit={handleSubmit}>
           <Input
             label="Email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
+            placeholder="Masukkan email Anda"
             required
           />
           <Input
-            label="Password"
+            label="Kata Sandi"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
+            placeholder="Masukkan kata sandi Anda"
             required
           />
-          <Button type="submit" className="w-full">Login</Button>
+          <Button type="submit" className="w-full">Masuk</Button>
         </form>
         <p className="text-center mt-4">
-          Don't have an account? <Link to="/register" className="text-primary hover:underline">Register</Link>
+          Belum punya akun? <Link to="/register" className="text-primary hover:underline">Daftar</Link>
         </p>
       </Card>
     </div>
