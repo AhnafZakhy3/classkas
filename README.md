@@ -78,7 +78,7 @@ npm start
 
 Aplikasi akan berjalan di:
 - **Frontend:** http://localhost:3000
-- **Backend:** http://localhost:5001
+- **Backend:** http://localhost:5000
 
 ### 4. Inisialisasi Database
 
