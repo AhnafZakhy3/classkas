@@ -1,126 +1,190 @@
-# ClassKas - Class Finance and Reminder System
+# ClassKas - Sistem Keuangan dan Pengingat Kelas
 
-A full-stack MVP web app for managing class funds and reminders, built with React, Node.js, Express, MySQL, and more.
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-18+-61dafb.svg)](https://reactjs.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479a1.svg)](https://www.mysql.com/)
 
-## Features
+Aplikasi web full-stack MVP untuk mengelola dana kelas dan pengingat, dibangun dengan React, Node.js, Express, MySQL, dan lainnya.
 
-- User authentication (JWT) with roles (Treasurer/Student)
-- Transaction management (Income/Expense)
-- Reminder system for tasks and payments
-- Dashboard with charts and summaries
-- Reports with PDF export
-- Responsive UI with Tailwind CSS
+## ✨ Fitur Utama
 
-## Tech Stack
+- 🔐 Autentikasi pengguna (JWT) dengan peran (Bendahara/Murid)
+- 💰 Manajemen transaksi (Pemasukan/Pengeluaran)
+- ⏰ Sistem pengingat untuk tugas dan pembayaran
+- 📊 Dashboard dengan grafik dan ringkasan
+- 📄 Laporan dengan ekspor PDF
+- 📱 UI responsif dengan Tailwind CSS
 
-- **Frontend:** React + Tailwind CSS + Axios + Chart.js + jsPDF
-- **Backend:** Node.js + Express.js + Sequelize ORM
-- **Database:** MySQL (local)
-- **Auth:** JWT + bcrypt
+## 🛠️ Teknologi yang Digunakan
 
-## Setup Instructions
+### Frontend
+- **React** - Library JavaScript untuk UI
+- **Tailwind CSS** - Framework CSS utility-first
+- **Axios** - HTTP client untuk API calls
+- **Chart.js** - Library untuk grafik dan chart
+- **jsPDF** - Library untuk generate PDF
 
-### Prerequisites
-- Node.js (v14+)
-- MySQL (local installation)
-- npm or yarn
+### Backend
+- **Node.js** - Runtime JavaScript
+- **Express.js** - Framework web untuk Node.js
+- **Sequelize ORM** - ORM untuk database
+- **MySQL** - Database relasional
+- **JWT** - JSON Web Token untuk autentikasi
+- **bcrypt** - Hashing password
 
-### 1. Clone and Install Dependencies
+## 🚀 Panduan Instalasi
+
+### Persyaratan Sistem
+- Node.js (v18+)
+- MySQL (instalasi lokal)
+- npm atau yarn
+
+### 1. Clone Repository dan Install Dependencies
 
 ```bash
-# Install backend dependencies
+# Clone repository
+git clone https://github.com/username/classkas.git
+cd classkas
+
+# Install dependencies backend
 cd server
 npm install
 
-# Install frontend dependencies
+# Install dependencies frontend
 cd ../client
 npm install
 ```
 
-### 2. Set up MySQL Database
+### 2. Setup Database MySQL
 
-Create a local MySQL database named `classkas`:
+Buat database lokal MySQL dengan nama `classkas`:
 
 ```sql
 CREATE DATABASE classkas;
 ```
 
-Update `.env` file with your MySQL credentials if different.
+Update file `.env` dengan kredensial MySQL Anda jika berbeda.
 
-### 3. Run the Application
+### 3. Jalankan Aplikasi
 
 ```bash
-# Start backend server (from /server)
+# Start server backend (dari folder /server)
 npm start
 
-# Start frontend (from /client in another terminal)
+# Start frontend (dari folder /client di terminal terpisah)
 npm start
 ```
 
-The app will run on:
-- Frontend: http://localhost:3000
-- Backend: http://localhost:5000
+Aplikasi akan berjalan di:
+- **Frontend:** http://localhost:3000
+- **Backend:** http://localhost:5001
 
-### 4. Initialize Database
+### 4. Inisialisasi Database
 
-The Sequelize models will auto-create tables on first run via `sequelize.sync()`.
+Model Sequelize akan otomatis membuat tabel pada saat pertama kali dijalankan melalui `sequelize.sync()`.
 
-## Project Structure
+## 📁 Struktur Proyek
 
 ```
-/classkas
-├── /client → React frontend
-├── /server → Express backend
-│   ├── models/ → Sequelize models
-│   ├── routes/ → API routes
-│   ├── controllers/
-│   ├── config/
-│   └── middleware/
-├── .env
-├── package.json
-└── README.md
+📦 classkas
+├── 📁 client/                 # Frontend React
+│   ├── 📁 public/
+│   ├── 📁 src/
+│   │   ├── 📁 components/     # Komponen reusable
+│   │   ├── 📁 pages/          # Halaman aplikasi
+│   │   ├── 📁 context/        # Context API
+│   │   └── 📁 utils/          # Utilities
+│   └── 📄 package.json
+├── 📁 server/                 # Backend Express
+│   ├── 📁 config/             # Konfigurasi database
+│   ├── 📁 controllers/        # Logic bisnis
+│   ├── 📁 middleware/         # Middleware autentikasi
+│   ├── 📁 models/             # Model Sequelize
+│   ├── 📁 routes/             # API routes
+│   └── 📄 package.json
+├── 📄 .env                    # Environment variables
+├── 📄 .gitignore
+└── 📄 README.md
 ```
 
-## API Endpoints
+## 🔌 API Endpoints
 
-### Authentication
-- `POST /api/auth/login` - Login user
+### Autentikasi
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| POST | `/api/auth/register` | Registrasi pengguna baru |
+| POST | `/api/auth/login` | Login pengguna |
 
-### Transactions
-- `GET /api/transactions` - Get all transactions
-- `POST /api/transactions` - Create transaction
-- `PUT /api/transactions/:id` - Update transaction
-- `DELETE /api/transactions/:id` - Delete transaction
+### Transaksi
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| GET | `/api/transactions` | Ambil semua transaksi |
+| GET | `/api/transactions/stats` | Ambil statistik dashboard |
+| GET | `/api/transactions/chart` | Ambil data chart bulanan |
+| POST | `/api/transactions` | Buat transaksi baru |
+| PUT | `/api/transactions/:id` | Update transaksi |
+| DELETE | `/api/transactions/:id` | Hapus transaksi |
 
-### Reminders
-- `GET /api/reminders` - Get all reminders
-- `POST /api/reminders` - Create reminder
-- `PUT /api/reminders/:id` - Update reminder
-- `DELETE /api/reminders/:id` - Delete reminder
+### Pengingat
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| GET | `/api/reminders` | Ambil semua pengingat |
+| POST | `/api/reminders` | Buat pengingat baru |
+| PUT | `/api/reminders/:id` | Update pengingat |
+| DELETE | `/api/reminders/:id` | Hapus pengingat |
 
-### Admin (Administrator only)
-- `GET /api/admin/users` - Get all users
-- `POST /api/admin/users` - Create user
-- `PUT /api/admin/users/:id` - Update user
-- `DELETE /api/admin/users/:id` - Delete user
-- `GET /api/admin/roles` - Get available roles
+### Admin (Hanya Administrator)
+| Method | Endpoint | Deskripsi |
+|--------|----------|-----------|
+| GET | `/api/admin/users` | Ambil semua pengguna |
+| POST | `/api/admin/users` | Buat pengguna baru |
+| PUT | `/api/admin/users/:id` | Update pengguna |
+| DELETE | `/api/admin/users/:id` | Hapus pengguna |
+| GET | `/api/admin/roles` | Ambil peran yang tersedia |
 
-## Usage
+## 📖 Cara Penggunaan
 
-1. **Create Admin Account:**
-   ```sql
-   INSERT INTO users (name, email, password, role, createdAt, updatedAt)
-   VALUES ('Admin', 'admin@classkas.com', 'admin123', 'administrator', NOW(), NOW());
-   ```
-   *Note: Password disimpan sebagai plain text untuk kemudahan admin melihatnya*
+### 1. Buat Akun Admin
+```sql
+INSERT INTO users (name, email, password, role, createdAt, updatedAt)
+VALUES ('Admin', 'admin@classkas.com', 'admin123', 'administrator', NOW(), NOW());
+```
+*Catatan: Password disimpan sebagai plain text untuk kemudahan admin melihatnya*
 
-2. Login as Administrator to create other users
-3. Login to access the dashboard
-4. Add transactions and reminders
-5. View reports and export to PDF
+### 2. Login sebagai Administrator
+- Login untuk membuat pengguna lain (Bendahara/Murid)
 
-## User Roles
+### 3. Gunakan Aplikasi
+- Login untuk mengakses dashboard
+- Tambahkan transaksi dan pengingat
+- Lihat laporan dan ekspor ke PDF
 
-- **Administrator:** Full access to user management, can create/edit/delete users
-- **Treasurer:** Can manage transactions and reminders
-- **Student:** Read-only access to dashboard and reports
+## 👥 Peran Pengguna
+
+| Peran | Deskripsi | Akses |
+|-------|-----------|-------|
+| **Administrator** | Akses penuh manajemen pengguna | Bisa buat/edit/hapus pengguna |
+| **Bendahara** | Mengelola keuangan kelas | Bisa kelola transaksi dan pengingat |
+| **Murid** | Akses terbatas | Hanya bisa lihat dashboard dan laporan |
+
+## 🤝 Kontribusi
+
+1. Fork repository ini
+2. Buat branch fitur baru (`git checkout -b feature/AmazingFeature`)
+3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
+4. Push ke branch (`git push origin feature/AmazingFeature`)
+5. Buat Pull Request
+
+## 📝 Lisensi
+
+Proyek ini menggunakan lisensi MIT - lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
+
+## 📞 Kontak
+
+- **Email:** ahnafzakhy@gmail.com
+- **GitHub:** [AhnafZakhy3](https://github.com/AhnafZakhy3)
+
+---
+
+⭐ Jika Anda menyukai proyek ini, berikan bintang di GitHub!
