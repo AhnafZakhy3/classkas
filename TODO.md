@@ -43,6 +43,11 @@
 - [x] Create .env
 - [x] Create README.md
 
+## Role-Based Permissions Implementation
+- [x] Update server routes to require treasurer role for CRUD operations on transactions and reminders
+- [x] Update frontend components to hide edit/delete/add buttons for students
+- [x] Ensure all users can view transactions and reminders
+
 ## Followup Steps
 - [x] Install backend dependencies (npm install in /server)
 - [x] Install frontend dependencies (npm install in /client)

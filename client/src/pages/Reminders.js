@@ -4,8 +4,10 @@ import Modal from '../components/Modal';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { api } from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 
 const Reminders = () => {
+  const { user } = useAuth();
   const [reminders, setReminders] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingReminder, setEditingReminder] = useState(null);
@@ -15,6 +17,8 @@ const Reminders = () => {
     dueDate: '',
     status: 'active',
   });
+
+  const isTreasurer = user && (user.role === 'bendahara' || user.role === 'administrator');
 
   useEffect(() => {
     fetchReminders();
@@ -81,7 +85,7 @@ const Reminders = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Pengingat</h1>
-        <Button onClick={() => setIsModalOpen(true)}>+ Tambah Pengingat</Button>
+        {isTreasurer && <Button onClick={() => setIsModalOpen(true)}>+ Tambah Pengingat</Button>}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -95,11 +99,15 @@ const Reminders = () => {
                 {reminder.status === 'active' ? 'Aktif' : 'Selesai'}
               </span>
               <div className="space-x-2">
-                <Button onClick={() => toggleStatus(reminder)} variant="secondary" size="sm">
-                  {reminder.status === 'active' ? 'Tandai Selesai' : 'Tandai Aktif'}
-                </Button>
-                <Button onClick={() => handleEdit(reminder)} variant="secondary" size="sm">Edit</Button>
-                <Button onClick={() => handleDelete(reminder.id)} variant="danger" size="sm">Hapus</Button>
+                {isTreasurer && (
+                  <>
+                    <Button onClick={() => toggleStatus(reminder)} variant="secondary" size="sm">
+                      {reminder.status === 'active' ? 'Tandai Selesai' : 'Tandai Aktif'}
+                    </Button>
+                    <Button onClick={() => handleEdit(reminder)} variant="secondary" size="sm">Edit</Button>
+                    <Button onClick={() => handleDelete(reminder.id)} variant="danger" size="sm">Hapus</Button>
+                  </>
+                )}
               </div>
             </div>
           </Card>

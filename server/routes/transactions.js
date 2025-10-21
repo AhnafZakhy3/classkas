@@ -7,7 +7,7 @@ const {
   updateTransaction,
   deleteTransaction
 } = require('../controllers/transactionController');
-const { authenticateToken } = require('../middleware/auth');
+const { authenticateToken, authorizeTreasurer } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -16,8 +16,8 @@ router.use(authenticateToken);
 router.get('/', getTransactions);
 router.get('/stats', getDashboardStats);
 router.get('/chart', getMonthlyChartData);
-router.post('/', createTransaction);
-router.put('/:id', updateTransaction);
-router.delete('/:id', deleteTransaction);
+router.post('/', authorizeTreasurer, createTransaction);
+router.put('/:id', authorizeTreasurer, updateTransaction);
+router.delete('/:id', authorizeTreasurer, deleteTransaction);
 
 module.exports = router;

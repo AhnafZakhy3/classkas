@@ -185,6 +185,6 @@ Proyek ini menggunakan lisensi MIT - lihat file [LICENSE](LICENSE) untuk detail 
 - **Email:** ahnafzakhy@gmail.com
 - **GitHub:** [AhnafZakhy3](https://github.com/AhnafZakhy3)
 
----
+--
 
 ⭐ Jika Anda menyukai proyek ini, berikan bintang di GitHub!

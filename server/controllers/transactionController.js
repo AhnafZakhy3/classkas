@@ -2,8 +2,9 @@ const { Transaction, User } = require('../models');
 
 const getTransactions = async (req, res) => {
   try {
+    // All users can see all transactions
     const transactions = await Transaction.findAll({
-      where: { userId: req.user.id },
+      include: [{ model: User, attributes: ['name', 'email'] }],
       order: [['date', 'DESC']],
     });
     res.json(transactions);
@@ -17,10 +18,9 @@ const getDashboardStats = async (req, res) => {
     const currentMonth = new Date().getMonth() + 1;
     const currentYear = new Date().getFullYear();
 
-    // Get all transactions for current month
+    // Get all transactions for current month (all users)
     const transactions = await Transaction.findAll({
       where: {
-        userId: req.user.id,
         [require('sequelize').Op.and]: [
           require('sequelize').where(require('sequelize').fn('MONTH', require('sequelize').col('date')), currentMonth),
           require('sequelize').where(require('sequelize').fn('YEAR', require('sequelize').col('date')), currentYear)
@@ -55,10 +55,9 @@ const getMonthlyChartData = async (req, res) => {
   try {
     const currentYear = new Date().getFullYear();
 
-    // Get transactions for current year grouped by month
+    // Get all transactions for current year grouped by month (all users)
     const transactions = await Transaction.findAll({
       where: {
-        userId: req.user.id,
         [require('sequelize').Op.and]: [
           require('sequelize').where(require('sequelize').fn('YEAR', require('sequelize').col('date')), currentYear)
         ]

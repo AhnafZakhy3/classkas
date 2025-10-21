@@ -18,7 +18,7 @@ const authenticateToken = (req, res, next) => {
 };
 
 const authorizeTreasurer = (req, res, next) => {
-  if (req.user.role !== 'bendahara') {
+  if (req.user.role !== 'bendahara' && req.user.role !== 'administrator') {
     return res.status(403).json({ message: 'Access denied. Bendahara role required.' });
   }
   next();
@@ -31,4 +31,11 @@ const authorizeAdmin = (req, res, next) => {
   next();
 };
 
-module.exports = { authenticateToken, authorizeTreasurer, authorizeAdmin };
+const authorizeStudent = (req, res, next) => {
+  if (req.user.role !== 'student' && req.user.role !== 'siswa') {
+    return res.status(403).json({ message: 'Access denied. Student role required.' });
+  }
+  next();
+};
+
+module.exports = { authenticateToken, authorizeTreasurer, authorizeAdmin, authorizeStudent };

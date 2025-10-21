@@ -4,8 +4,10 @@ import Modal from '../components/Modal';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { api } from '../utils/api';
+import { useAuth } from '../context/AuthContext';
 
 const Transactions = () => {
+  const { user } = useAuth();
   const [transactions, setTransactions] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
@@ -15,6 +17,8 @@ const Transactions = () => {
     type: 'income',
     amount: '',
   });
+
+  const isTreasurer = user && (user.role === 'bendahara' || user.role === 'administrator');
 
   useEffect(() => {
     fetchTransactions();
@@ -68,16 +72,18 @@ const Transactions = () => {
     }
   };
 
-  const headers = ['Tanggal', 'Deskripsi', 'Tipe', 'Jumlah'];
+  const headers = ['Tanggal', 'Deskripsi', 'Tipe', 'Jumlah', 'Pengguna'];
 
   const tableData = transactions.map(t => ({
     tanggal: new Date(t.date).toLocaleDateString(),
     deskripsi: t.description,
     tipe: <span className={t.type === 'income' ? 'text-green-600' : 'text-red-600'}>{t.type === 'income' ? 'Pemasukan' : 'Pengeluaran'}</span>,
     jumlah: `Rp${parseFloat(t.amount).toFixed(2)}`,
+    pengguna: t.User ? t.User.name : 'N/A',
   }));
 
   const actions = (row, index) => {
+    if (!isTreasurer) return null; // Students can't see actions
     const transaction = transactions[index];
     return (
       <div className="space-x-2">
@@ -91,7 +97,7 @@ const Transactions = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Transaksi</h1>
-        <Button onClick={() => setIsModalOpen(true)}>+ Tambah Transaksi</Button>
+        {isTreasurer && <Button onClick={() => setIsModalOpen(true)}>+ Tambah Transaksi</Button>}
       </div>
 
       <Table headers={headers} data={tableData} actions={actions} />

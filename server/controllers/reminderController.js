@@ -2,8 +2,8 @@ const { Reminder } = require('../models');
 
 const getReminders = async (req, res) => {
   try {
+    // All users can see all reminders
     const reminders = await Reminder.findAll({
-      where: { userId: req.user.id },
       order: [['dueDate', 'ASC']],
     });
     res.json(reminders);
